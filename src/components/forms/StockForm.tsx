@@ -25,7 +25,7 @@ const schema = z.object({
     })
 })
 
-export function StocksForm({
+export function StockForm({
   defaultValues,
   onSave
 }: {

@@ -1,12 +1,5 @@
+import { WidgetMeta } from "@/lib/types";
 import { apiBase } from "@/services/api";
-
-export type WidgetType = 'weather' | 'stocks' | 'news';
-
-export type WidgetMeta = {
-  type: WidgetType;
-  name: string;
-  description: string;
-};
 
 export const getAvailableWidgets = async (): Promise<WidgetMeta[]> => {
   const res = await fetch(`${apiBase}/api/widgets`, {

@@ -2,7 +2,7 @@ import { Suspense, useState } from "react";
 import { WidgetInstance } from "@/lib/types";
 import { WidgetRenderer } from "@/components/widgets";
 import { WeatherForm } from "@/components/forms/WeatherForm";
-import { StocksForm } from "@/components/forms/StocksForm";
+import { StockForm } from "@/components/forms/StockForm";
 import { NewsForm } from "@/components/forms/NewsForm";
 import {
   Card,
@@ -31,7 +31,7 @@ export default function WidgetCard({
   const Renderer = WidgetRenderer[widget.type];
   const Form = {
     weather: WeatherForm,
-    stocks: StocksForm,
+    stock: StockForm,
     news: NewsForm
   }[widget.type];
 
