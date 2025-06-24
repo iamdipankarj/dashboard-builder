@@ -1,9 +1,17 @@
+import { Suspense, useState } from "react";
 import { WidgetInstance } from "@/lib/types";
 import { WidgetRenderer } from "@/components/widgets";
 import { WeatherForm } from "@/components/forms/WeatherForm";
 import { StocksForm } from "@/components/forms/StocksForm";
 import { NewsForm } from "@/components/forms/NewsForm";
-import { Suspense, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Button } from "@/components/ui/button";
+import { GripVertical, Pencil, Trash } from "lucide-react";
 
 export default function WidgetCard({
   widget,
@@ -28,38 +36,42 @@ export default function WidgetCard({
   }[widget.type];
 
   return (
-    <div className="bg-white shadow p-4 rounded border">
-      <div className="flex justify-between items-center">
-        <h3 className="font-bold">{widget.type.toUpperCase()}</h3>
-        <div className="flex items-center gap-2">
-          {/* Drag handle */}
-          <div
-            className="cursor-move px-1 text-gray-400 hover:text-gray-600"
-            {...dragListeners}
-            {...dragAttributes}
-          >
-            ⠿
+    <Card className="w-full max-w-sm">
+      <CardHeader>
+        <div className="flex flex-row justify-between items-center">
+          <CardTitle>{widget.type.toUpperCase()}</CardTitle>
+          <div className="flex items-center gap-2">
+            <Button className="cursor-move" variant='outline' size='icon' asChild>
+              <div
+                // className="cursor-move px-1 text-gray-400 hover:text-gray-600"
+                {...dragListeners}
+                {...dragAttributes}
+              >
+                <GripVertical />
+              </div>
+            </Button>
+
+            <Button
+              type="button"
+              variant="outline"
+              size='icon'
+              onClick={() => setEditing((prev) => !prev)}
+            >
+              <Pencil />
+            </Button>
+
+            <Button
+              type="button"
+              variant="secondary"
+              size='icon'
+              onClick={onRemove}
+            >
+              <Trash />
+            </Button>
           </div>
-
-          {/* Config + Remove */}
-          <button
-            type="button"
-            className="hover:text-blue-600"
-            onClick={() => setEditing((prev) => !prev)}
-          >
-            ⚙️
-          </button>
-          <button
-            type="button"
-            className="hover:text-red-600"
-            onClick={onRemove}
-          >
-            🗑️
-          </button>
         </div>
-      </div>
-
-      <div className="mt-3">
+      </CardHeader>
+      <CardContent>
         {editing ? (
           <Form
             defaultValues={widget.config}
@@ -73,7 +85,7 @@ export default function WidgetCard({
             <Renderer config={widget.config} />
           </Suspense>
         )}
-      </div>
-    </div>
-  );
+      </CardContent>
+    </Card>
+  )
 }

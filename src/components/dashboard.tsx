@@ -5,6 +5,7 @@ import { useSaveDashboard } from "@/hooks/useSaveDashboard";
 import DashboardGrid from "@/components/DashboardGrid";
 import { Button } from "@/components/ui/button";
 import { WidgetType } from "@/lib/types";
+import { WandSparkles } from "lucide-react";
 
 export default function Dashboard() {
   const {
@@ -59,16 +60,14 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">Smart Dashboard</h1>
-
       <div className="flex flex-wrap gap-4">
         {widgetTypes.map(w => (
-          <Button key={w.type} onClick={() => handleAddWidget(w.type)}>
+          <Button key={w.type} size='sm' onClick={() => handleAddWidget(w.type)}>
             Add {w.name}
           </Button>
         ))}
-        <Button variant="outline" onClick={makeRandomOrder}>
-          I am Feeling Lucky
+        <Button variant="outline" size='sm' onClick={makeRandomOrder}>
+          <WandSparkles /> AI Suggest
         </Button>
       </div>
 

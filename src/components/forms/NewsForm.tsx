@@ -2,11 +2,28 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { newsSources } from "@/helpers/data";
 
 const schema = z.object({
-  source: z.string().min(1, "Source is required")
-});
+  source: z
+    .string({
+      required_error: "Please select a source.",
+    })
+})
 
 export function NewsForm({
   defaultValues,
@@ -15,18 +32,39 @@ export function NewsForm({
   defaultValues: any;
   onSave: (data: any) => void;
 }) {
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const form = useForm<z.infer<typeof schema>>({
     defaultValues,
-    resolver: zodResolver(schema)
-  });
+    resolver: zodResolver(schema),
+  })
 
   return (
-    <form onSubmit={handleSubmit(onSave)} className="space-y-2">
-      <Input {...register("source")} placeholder="Enter source" />
-      {errors.source?.message && (
-        <p className="text-red-500 text-sm">{String(errors.source.message)}</p>
-      )}
-      <Button type="submit">Save</Button>
-    </form>
-  );
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSave)} className="flex gap-4">
+        <FormField
+          control={form.control}
+          name="source"
+          render={({ field }) => (
+            <FormItem className="flex-1">
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a source" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {newsSources.map((source) => (
+                    <SelectItem key={source.id} value={source.id}>
+                      {source.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="flex-shrink-0">Submit</Button>
+      </form>
+    </Form>
+  )
 }
