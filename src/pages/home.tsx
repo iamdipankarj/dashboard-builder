@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar"
+import Dashboard from "@/components/dashboard"
 import { NavActions } from "@/components/nav-actions"
 import {
   Breadcrumb,
@@ -13,7 +14,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 
-export function Dashboard() {
+export function Home() {
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -40,8 +41,7 @@ export function Dashboard() {
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 px-4">
-          <div className="bg-muted/50 mx-auto h-24 w-full rounded-xl" />
-          <div className="bg-muted/50 mx-auto h-full w-full rounded-xl" />
+          <Dashboard />
         </div>
       </SidebarInset>
     </SidebarProvider>
