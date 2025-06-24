@@ -3,7 +3,7 @@ import { WidgetRenderer } from "@/components/widgets";
 import { WeatherForm } from "@/components/forms/WeatherForm";
 import { StocksForm } from "@/components/forms/StocksForm";
 import { NewsForm } from "@/components/forms/NewsForm";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 export default function WidgetCard({
   widget,
@@ -69,7 +69,9 @@ export default function WidgetCard({
             }}
           />
         ) : (
-          <Renderer config={widget.config} />
+          <Suspense fallback={<p>Loading widget...</p>}>
+            <Renderer config={widget.config} />
+          </Suspense>
         )}
       </div>
     </div>

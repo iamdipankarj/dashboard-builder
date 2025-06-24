@@ -39,13 +39,19 @@ function SortableItem({
     listeners,
     setNodeRef,
     transform,
-    transition
+    transition,
+    isDragging
   } = useSortable({ id: widget.id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition
-  };
+    transition,
+    opacity: isDragging ? 0.6 : 1,
+    boxShadow: isDragging ? "0 0 0 2px #3b82f6" : undefined,
+    zIndex: isDragging ? 999 : 1,
+    pointerEvents: isDragging ? "none" : "auto",
+    position: isDragging ? 'relative' : 'static'
+  } as any;
 
   return (
     <div ref={setNodeRef} style={style}>
@@ -88,7 +94,7 @@ export default function DashboardGrid({
         items={widgets.map(w => w.id)}
         strategy={verticalListSortingStrategy}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="relative z-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {widgets.map(widget => (
             <SortableItem
               key={widget.id}
