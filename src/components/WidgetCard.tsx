@@ -43,7 +43,6 @@ export default function WidgetCard({
           <div className="flex items-center gap-2">
             <Button className="cursor-move" variant='outline' size='icon' asChild>
               <div
-                // className="cursor-move px-1 text-gray-400 hover:text-gray-600"
                 {...dragListeners}
                 {...dragAttributes}
               >

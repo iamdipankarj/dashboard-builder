@@ -2,34 +2,17 @@ import { useEffect, useState } from "react";
 import { WidgetInstance, WidgetType } from "@/lib/types";
 import { getDashboard } from "@/services/dashboard";
 import { nanoid } from "nanoid";
-import {
-  loadFromStorage,
-  saveToStorage,
-  clearStorage
-} from "@/lib/storage";
 
 export function useDashboard() {
   const [widgets, setWidgets] = useState<WidgetInstance[]>([]);
 
-  // Load from localStorage first
   useEffect(() => {
-    const local = loadFromStorage();
-    if (Array.isArray(local) && local.length > 0) {
-      setWidgets(local);
-    } else {
-      getDashboard()
-        .then((data) => {
-          setWidgets(data);
-          saveToStorage(data);
-        })
-        .catch(console.error);
-    }
+    getDashboard()
+      .then((data) => {
+        setWidgets(data);
+      })
+      .catch(console.error);
   }, []);
-
-  // Save to localStorage on every update
-  useEffect(() => {
-    saveToStorage(widgets); // always persist, even empty array
-  }, [widgets]);
 
   const addWidget = (type: WidgetType) => {
     const newWidget: WidgetInstance = {
@@ -55,7 +38,6 @@ export function useDashboard() {
     setWidgets,
     addWidget,
     updateWidget,
-    removeWidget,
-    clearStorage
+    removeWidget
   };
 }

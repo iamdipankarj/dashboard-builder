@@ -1,12 +1,13 @@
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import { Input } from "@/components/ui/input";
 
 export function WidgetChatbot({ onInstruction }: { onInstruction: (inst: any) => void }) {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSend = async () => {
+  const handleSend = async (e: FormEvent) => {
+    e.preventDefault()
     setLoading(true);
 
     try {
@@ -27,15 +28,15 @@ export function WidgetChatbot({ onInstruction }: { onInstruction: (inst: any) =>
   };
 
   return (
-    <div className="space-y-2">
-      <Textarea
+    <form onSubmit={handleSend} className="flex gap-2">
+      <Input
         placeholder="Ask the assistant to add/remove widgets…"
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
-      <Button onClick={handleSend} disabled={loading}>
+      <Button type="submit" disabled={loading}>
         {loading ? "Thinking..." : "Ask Assistant"}
       </Button>
-    </div>
+    </form>
   );
 }

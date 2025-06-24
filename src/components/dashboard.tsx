@@ -4,8 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useSaveDashboard } from "@/hooks/useSaveDashboard";
 import DashboardGrid from "@/components/DashboardGrid";
 import { Button } from "@/components/ui/button";
-import { WidgetType } from "@/lib/types";
+import { WidgetInstance, WidgetType } from "@/lib/types";
 import { Loader2, WandSparkles } from "lucide-react";
+import { WidgetChatbot } from "@/components/WidgetChatbot";
+import { nanoid } from "nanoid";
 
 export default function Dashboard() {
   const {
@@ -24,9 +26,13 @@ export default function Dashboard() {
   const saveMutation = useSaveDashboard();
 
   const handleAddWidget = (type: WidgetType) => {
-    addWidget(type);
-    const newLayout = [...widgets, { id: "temp", type, config: {} }];
-    saveMutation.mutate(newLayout);
+    const newWidget: WidgetInstance = {
+      id: nanoid(),
+      type,
+      config: {}
+    };
+    addWidget(type); // or setWidgets([...widgets, newWidget])
+    saveMutation.mutate([...widgets, newWidget]);
   };
 
   const handleReorder = (newOrder: typeof widgets) => {
@@ -58,8 +64,52 @@ export default function Dashboard() {
     saveMutation.mutate(suggestions);
   };
 
+  const handleInstruction = (inst: {
+    action: "add" | "remove" | "update" | "clear";
+    widget: string;
+    config?: Record<string, any>;
+  }) => {
+    if (inst.action === "add") {
+      const newWidget: WidgetInstance = {
+        id: nanoid(),
+        type: inst.widget as WidgetType,
+        config: inst.config || {}
+      };
+      setWidgets(prev => {
+        const updated = [...prev, newWidget];
+        saveMutation.mutate(updated); // mutate only after building from latest
+        return updated;
+      });
+    }
+
+    else if (inst.action === "remove") {
+      setWidgets(prev => {
+        const updated = prev.filter(w => w.type !== inst.widget);
+        saveMutation.mutate(updated);
+        return updated;
+      });
+    }
+
+    else if (inst.action === "update") {
+      setWidgets(prev => {
+        const updated = prev.map(w =>
+          w.type === inst.widget
+            ? { ...w, config: inst.config || {} }
+            : w
+        );
+        saveMutation.mutate(updated);
+        return updated;
+      });
+    }
+
+    else if (inst.action === "clear") {
+      setWidgets([]);
+      saveMutation.mutate([]);
+    }
+  };
+
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       <div className="flex flex-wrap gap-4 items-center">
         {isLoading ? (
           <div className="flex items-center gap-2">
@@ -69,13 +119,14 @@ export default function Dashboard() {
         ) : (
           <>
             {widgetTypes.map(w => (
-              <Button key={w.type} size='sm' onClick={() => handleAddWidget(w.type)}>
+              <Button key={w.type} onClick={() => handleAddWidget(w.type)}>
                 Add {w.name}
               </Button>
             ))}
-            <Button variant="outline" size='sm' onClick={makeRandomOrder}>
+            <Button variant="outline" onClick={makeRandomOrder}>
               <WandSparkles /> AI Suggest
             </Button>
+            <WidgetChatbot onInstruction={handleInstruction} />
           </>
         )}
       </div>

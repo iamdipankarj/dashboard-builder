@@ -1,3 +1,5 @@
+import { apiBase } from "@/services/api";
+
 export type WidgetType = 'weather' | 'stocks' | 'news';
 
 export type WidgetMeta = {
@@ -7,7 +9,7 @@ export type WidgetMeta = {
 };
 
 export const getAvailableWidgets = async (): Promise<WidgetMeta[]> => {
-  const res = await fetch('https://larakit.dipankarjana.com/api/widgets', {
+  const res = await fetch(`${apiBase}/api/widgets`, {
     headers: {
       'Accept': 'application/json',
     }
