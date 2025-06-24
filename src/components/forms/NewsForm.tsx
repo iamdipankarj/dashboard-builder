@@ -15,7 +15,7 @@ export function NewsForm({
   defaultValues: any;
   onSave: (data: any) => void;
 }) {
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues,
     resolver: zodResolver(schema)
   });
@@ -23,8 +23,8 @@ export function NewsForm({
   return (
     <form onSubmit={handleSubmit(onSave)} className="space-y-2">
       <Input {...register("source")} placeholder="Enter source" />
-      {formState.errors.source && (
-        <p className="text-red-500 text-sm">{formState.errors.source.message}</p>
+      {errors.source?.message && (
+        <p className="text-red-500 text-sm">{String(errors.source.message)}</p>
       )}
       <Button type="submit">Save</Button>
     </form>

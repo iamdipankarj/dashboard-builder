@@ -1,20 +1,14 @@
 import { useEffect, useState } from "react";
 import { WidgetInstance, WidgetType } from "@/lib/types";
+import { getDashboard } from "@/services/dashboard";
 import { nanoid } from "nanoid";
 
 export function useDashboard() {
   const [widgets, setWidgets] = useState<WidgetInstance[]>([]);
 
   useEffect(() => {
-    const stored = localStorage.getItem("dashboard");
-    if (stored) {
-      setWidgets(JSON.parse(stored));
-    }
+    getDashboard().then(setWidgets).catch(console.error);
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem("dashboard", JSON.stringify(widgets));
-  }, [widgets]);
 
   const addWidget = (type: WidgetType) => {
     const newWidget: WidgetInstance = {
@@ -37,9 +31,9 @@ export function useDashboard() {
 
   return {
     widgets,
+    setWidgets,
     addWidget,
     updateWidget,
-    removeWidget,
-    setWidgets
+    removeWidget
   };
 }

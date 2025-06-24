@@ -15,7 +15,7 @@ export function StocksForm({
   defaultValues: any;
   onSave: (data: any) => void;
 }) {
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues,
     resolver: zodResolver(schema)
   });
@@ -23,8 +23,8 @@ export function StocksForm({
   return (
     <form onSubmit={handleSubmit(onSave)} className="space-y-2">
       <Input {...register("symbol")} placeholder="Enter symbol" />
-      {formState.errors.symbol && (
-        <p className="text-red-500 text-sm">{formState.errors.symbol.message}</p>
+      {errors.symbol?.message && (
+        <p className="text-red-500 text-sm">{String(errors.symbol.message)}</p>
       )}
       <Button type="submit">Save</Button>
     </form>

@@ -15,7 +15,7 @@ export function WeatherForm({
   defaultValues: any;
   onSave: (data: any) => void;
 }) {
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues,
     resolver: zodResolver(schema)
   });
@@ -23,8 +23,8 @@ export function WeatherForm({
   return (
     <form onSubmit={handleSubmit(onSave)} className="space-y-2">
       <Input {...register("location")} placeholder="Enter location" />
-      {formState.errors.location && (
-        <p className="text-red-500 text-sm">{formState.errors.location.message}</p>
+      {errors.location?.message && (
+        <p className="text-red-500 text-sm">{String(errors.location.message)}</p>
       )}
       <Button type="submit">Save</Button>
     </form>
