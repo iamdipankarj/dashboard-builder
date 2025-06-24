@@ -7,7 +7,7 @@ export type WidgetMeta = {
 };
 
 export const getAvailableWidgets = async (): Promise<WidgetMeta[]> => {
-  const res = await fetch(`${import.meta.env.VITE_API_BASE}/api/widgets`, {
+  const res = await fetch('https://larakit.dipankarjana.com/api/widgets', {
     headers: {
       'Accept': 'application/json',
     }

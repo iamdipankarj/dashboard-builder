@@ -5,7 +5,7 @@ import { useSaveDashboard } from "@/hooks/useSaveDashboard";
 import DashboardGrid from "@/components/DashboardGrid";
 import { Button } from "@/components/ui/button";
 import { WidgetType } from "@/lib/types";
-import { WandSparkles } from "lucide-react";
+import { Loader2, WandSparkles } from "lucide-react";
 
 export default function Dashboard() {
   const {
@@ -16,7 +16,7 @@ export default function Dashboard() {
     removeWidget
   } = useDashboard();
 
-  const { data: widgetTypes = [] } = useQuery({
+  const { data: widgetTypes = [], isLoading } = useQuery({
     queryKey: ["widget-types"],
     queryFn: getAvailableWidgets
   });
@@ -60,15 +60,24 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 space-y-6">
-      <div className="flex flex-wrap gap-4">
-        {widgetTypes.map(w => (
-          <Button key={w.type} size='sm' onClick={() => handleAddWidget(w.type)}>
-            Add {w.name}
-          </Button>
-        ))}
-        <Button variant="outline" size='sm' onClick={makeRandomOrder}>
-          <WandSparkles /> AI Suggest
-        </Button>
+      <div className="flex flex-wrap gap-4 items-center">
+        {isLoading ? (
+          <div className="flex items-center gap-2">
+            <Loader2 className="animate-spin" />
+            <span className="text-sm">Loading available widgets...</span>
+          </div>
+        ) : (
+          <>
+            {widgetTypes.map(w => (
+              <Button key={w.type} size='sm' onClick={() => handleAddWidget(w.type)}>
+                Add {w.name}
+              </Button>
+            ))}
+            <Button variant="outline" size='sm' onClick={makeRandomOrder}>
+              <WandSparkles /> AI Suggest
+            </Button>
+          </>
+        )}
       </div>
 
       <DashboardGrid

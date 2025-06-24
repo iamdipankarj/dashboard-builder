@@ -1,13 +1,15 @@
 import { WidgetInstance } from "@/lib/types";
 
+const api = 'https://larakit.dipankarjana.com/api/dashboard'
+
 export async function getDashboard(): Promise<WidgetInstance[]> {
-  const res = await fetch(`${import.meta.env.VITE_API_BASE}/api/dashboard`);
+  const res = await fetch(api);
   if (!res.ok) throw new Error("Failed to fetch dashboard");
   return res.json();
 }
 
 export async function saveDashboard(layout: WidgetInstance[]) {
-  const res = await fetch(`${import.meta.env.VITE_API_BASE}/api/dashboard`, {
+  const res = await fetch(api, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
