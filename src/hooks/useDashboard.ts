@@ -14,7 +14,7 @@ export function useDashboard() {
   // Load from localStorage first
   useEffect(() => {
     const local = loadFromStorage();
-    if (local && Array.isArray(local)) {
+    if (Array.isArray(local) && local.length > 0) {
       setWidgets(local);
     } else {
       getDashboard()
