@@ -1,6 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar"
 import Dashboard from "@/components/dashboard"
-import { NavActions } from "@/components/nav-actions"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -30,14 +29,11 @@ export function Home() {
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbPage className="line-clamp-1">
-                    Dashboard Builder
+                    <strong>Dashboard Builder</strong>
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
-          </div>
-          <div className="ml-auto px-3">
-            <NavActions />
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 px-4">
