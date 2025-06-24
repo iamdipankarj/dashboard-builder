@@ -1,9 +1,7 @@
-import { NewsWidget } from '@/components/widgets/NewsWidget';
-import { StocksWidget } from '@/components/widgets/StocksWidget';
-import { WeatherWidget } from '@/components/widgets/WeatherWidget';
+import { lazy } from "react";
 
 export const WidgetRenderer = {
-  weather: WeatherWidget,
-  stocks: StocksWidget,
-  news: NewsWidget
+  weather: lazy(() => import('@/components/widgets/WeatherWidget')),
+  stocks: lazy(() => import('@/components/widgets/StocksWidget')),
+  news: lazy(() => import('@/components/widgets/NewsWidget'))
 };

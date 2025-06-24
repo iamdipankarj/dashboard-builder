@@ -6,10 +6,18 @@ export type WidgetMeta = {
   description: string;
 };
 
+const API_BASE = 'http://localhost:8000';
+
 export const getAvailableWidgets = async (): Promise<WidgetMeta[]> => {
-  return [
-    { type: 'weather', name: 'Weather', description: 'Shows weather' },
-    { type: 'stocks', name: 'Stocks', description: 'Tracks stock prices' },
-    { type: 'news', name: 'News', description: 'Top news headlines' },
-  ];
+  const res = await fetch(`${API_BASE}/api/widgets`, {
+    headers: {
+      'Accept': 'application/json',
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch widget list");
+  }
+
+  return res.json();
 };
