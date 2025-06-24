@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { FormEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
+import { Sparkles } from "lucide-react";
 
 export function WidgetChatbot({ onInstruction }: { onInstruction: (inst: any) => void }) {
   const [input, setInput] = useState("");
@@ -30,11 +31,13 @@ export function WidgetChatbot({ onInstruction }: { onInstruction: (inst: any) =>
   return (
     <form onSubmit={handleSend} className="flex gap-2">
       <Input
+        id="agent_input"
         placeholder="Ask the assistant to add/remove widgets…"
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
       <Button type="submit" disabled={loading}>
+        <Sparkles />
         {loading ? "Thinking..." : "Ask Assistant"}
       </Button>
     </form>
