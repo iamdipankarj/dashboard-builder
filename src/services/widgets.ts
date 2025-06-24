@@ -6,10 +6,8 @@ export type WidgetMeta = {
   description: string;
 };
 
-const API_BASE = 'http://localhost:8000';
-
 export const getAvailableWidgets = async (): Promise<WidgetMeta[]> => {
-  const res = await fetch(`${API_BASE}/api/widgets`, {
+  const res = await fetch(`${import.meta.env.VITE_API_BASE}/api/widgets`, {
     headers: {
       'Accept': 'application/json',
     }
