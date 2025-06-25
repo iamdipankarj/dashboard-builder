@@ -5,7 +5,7 @@ import { useSaveDashboard } from "@/hooks/useSaveDashboard";
 import DashboardGrid from "@/components/DashboardGrid";
 import { Button } from "@/components/ui/button";
 import { WidgetInstance, WidgetType } from "@/lib/types";
-import { Loader2, WandSparkles } from "lucide-react";
+import { Loader2, Trash2, WandSparkles } from "lucide-react";
 import { WidgetChatbot } from "@/components/WidgetChatbot";
 import { nanoid } from "nanoid";
 
@@ -64,6 +64,11 @@ export default function Dashboard() {
     saveMutation.mutate(suggestions);
   };
 
+  const handleClearDashboard = () => {
+    setWidgets([]);
+    saveMutation.mutate([]);
+  };
+
   const handleInstruction = (inst: {
     action: "add" | "remove" | "update" | "clear";
     widget: string;
@@ -77,7 +82,7 @@ export default function Dashboard() {
       };
       setWidgets(prev => {
         const updated = [...prev, newWidget];
-        saveMutation.mutate(updated); // mutate only after building from latest
+        saveMutation.mutate(updated);
         return updated;
       });
     }
@@ -117,17 +122,21 @@ export default function Dashboard() {
             <span className="text-sm">Loading available widgets...</span>
           </div>
         ) : (
-          <>
+          <div className="flex gap-2 flex-1">
             {widgetTypes.map(w => (
               <Button key={w.type} onClick={() => handleAddWidget(w.type)}>
                 Add {w.name}
               </Button>
             ))}
+            <Button variant="destructive" onClick={handleClearDashboard}>
+              <Trash2 />
+              Clear Dashboard
+            </Button>
             <Button variant="outline" onClick={makeRandomOrder}>
               <WandSparkles /> AI Suggest
             </Button>
             <WidgetChatbot onInstruction={handleInstruction} />
-          </>
+          </div>
         )}
       </div>
 

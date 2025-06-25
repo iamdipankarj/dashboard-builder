@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 #root {
-  @apply w-full;
+  @apply w-full min-w-[1024px];
 }
 
 .logo {

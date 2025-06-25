@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { FormEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Sparkles } from "lucide-react";
+import { apiBase } from "@/services/api";
 
 export function WidgetChatbot({ onInstruction }: { onInstruction: (inst: any) => void }) {
   const [input, setInput] = useState("");
@@ -12,7 +13,7 @@ export function WidgetChatbot({ onInstruction }: { onInstruction: (inst: any) =>
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/api/widget-chat", {
+      const res = await fetch(`${apiBase}/api/widget-chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input })
@@ -29,7 +30,7 @@ export function WidgetChatbot({ onInstruction }: { onInstruction: (inst: any) =>
   };
 
   return (
-    <form onSubmit={handleSend} className="flex gap-2">
+    <form onSubmit={handleSend} className="flex gap-2 flex-1">
       <Input
         id="agent_input"
         placeholder="Ask the assistant to add/remove widgets…"
@@ -38,7 +39,7 @@ export function WidgetChatbot({ onInstruction }: { onInstruction: (inst: any) =>
       />
       <Button type="submit" disabled={loading}>
         <Sparkles />
-        {loading ? "Thinking..." : "Ask Assistant"}
+        {loading ? "Thinking..." : "Ask"}
       </Button>
     </form>
   );
