@@ -1,5 +1,6 @@
 import { AppSidebar } from "@/components/app-sidebar"
 import Dashboard from "@/components/dashboard"
+import { SavingIndicator } from "@/components/SavingIndicator"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -28,8 +29,9 @@ export function Home() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbPage className="line-clamp-1">
+                  <BreadcrumbPage className="line-clamp-1 inline-flex space-x-1">
                     <strong>Dashboard Builder</strong>
+                    <SavingIndicator />
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>

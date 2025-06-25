@@ -1,13 +1,8 @@
-export type WidgetType = 'weather' | 'stocks' | 'news';
-
-export type WidgetMeta = {
-  type: WidgetType;
-  name: string;
-  description: string;
-};
+import { WidgetMeta } from "@/lib/types";
+import { apiBase } from "@/services/api";
 
 export const getAvailableWidgets = async (): Promise<WidgetMeta[]> => {
-  const res = await fetch('https://larakit.dipankarjana.com/api/widgets', {
+  const res = await fetch(`${apiBase}/api/widgets`, {
     headers: {
       'Accept': 'application/json',
     }

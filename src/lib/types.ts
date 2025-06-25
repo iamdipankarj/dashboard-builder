@@ -3,10 +3,16 @@ export interface ApiResponse<T> {
   error: string | null;
 }
 
-export type WidgetType = 'weather' | 'stocks' | 'news';
+export type WidgetType = 'weather' | 'stock' | 'news';
 
 export type WidgetInstance = {
   id: string;
   type: WidgetType;
   config: Record<string, any>;
+};
+
+export type WidgetMeta = {
+  type: WidgetType;
+  name: string;
+  description: string;
 };

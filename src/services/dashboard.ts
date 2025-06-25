@@ -1,6 +1,7 @@
 import { WidgetInstance } from "@/lib/types";
+import { apiBase } from "@/services/api";
 
-const api = 'https://larakit.dipankarjana.com/api/dashboard'
+const api = `${apiBase}/api/dashboard`
 
 export async function getDashboard(): Promise<WidgetInstance[]> {
   const res = await fetch(api);

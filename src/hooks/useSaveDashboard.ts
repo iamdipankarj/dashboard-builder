@@ -7,6 +7,7 @@ export function useSaveDashboard() {
   const queryClient = useQueryClient();
 
   return useMutation({
+    mutationKey: ["save-dashboard"],
     mutationFn: (widgets: WidgetInstance[]) => saveDashboard(widgets),
     onMutate: async (newWidgets) => {
       await queryClient.cancelQueries({ queryKey: ["dashboard"] });
