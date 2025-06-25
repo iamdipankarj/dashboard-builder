@@ -6,7 +6,7 @@ export function SavingIndicator() {
   if (!isSaving) return null;
 
   return (
-    <span className="bg-blue-100 text-blue-800 px-1 text-sm rounded-md inline-flex animate-pulse">
+    <span className="bg-blue-300 text-blue-900 px-1 text-sm rounded-md inline-flex animate-pulse">
       Saving...
     </span>
   );
