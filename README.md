@@ -99,6 +99,7 @@ While the same can be built on top of nodejs too, this time I chose to have on a
 ```
 
 ## Possible Improvements
+* A search functionality for widgets.
 * The API base urls should be moved to environment variables.
 * Undo / Redo Functionality
 * Confirmation Modals for Destructive Actions
