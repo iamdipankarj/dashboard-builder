@@ -33,7 +33,7 @@ export function WidgetChatbot({ onInstruction }: { onInstruction: (inst: any) =>
     <form onSubmit={handleSend} className="flex gap-2 flex-1">
       <Input
         id="agent_input"
-        placeholder="Ask the assistant to add/remove widgets…"
+        placeholder="Add apple stock."
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
