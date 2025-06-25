@@ -48,7 +48,6 @@ yarn preview
 
 ## Design Decisions
 
-This project is [MIT licensed](LICENSE).
 ### Widget System as Modular Components
 Each widget (`WeatherWidget`, `NewsWidget`, `StockWidget`, etc.) was created as a standalone, dynamically-rendered component.
 
