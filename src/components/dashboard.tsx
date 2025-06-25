@@ -31,7 +31,7 @@ export default function Dashboard() {
       type,
       config: {}
     };
-    addWidget(type); // or setWidgets([...widgets, newWidget])
+    addWidget(type);
     saveMutation.mutate([...widgets, newWidget]);
   };
 
